@@ -1,30 +1,65 @@
 const express = require("express");
 const UserModel = require("../model/user.model");
-const userData = require("../db/data");
+// const userData = require("../db/data");
+
+const CreateAdmin = (req, res) => {
+  const body = req.body;
+  UserModel.create(
+    {
+      ...body,
+      role: "ADMIN",
+    },
+    (err, data) => {
+      console.log(data);
+      if (!err) {
+        res.json({
+          message: "user is created",
+          status: 200,
+          data: data,
+        });
+      } else {
+        res.json({
+          message: "user is not created",
+          status: 404,
+        });
+      }
+    }
+  );
+};
 
 const CreateUser = (req, res) => {
-  UserModel.create(userData, (err, data) => {
-    if (!err) {
-      res.json({
-        message: "user is created",
-        status: 200,
-        data: data,
-      });
-    } else {
-      res.json({
-        message: "user is not created",
-        status: 404,
-      });
+  const body = req.body;
+  UserModel.create(
+    {
+      ...body,
+      role: "USER",
+    },
+    (err, data) => {
+      if (!err) {
+        console.log(data);
+
+        res.json({
+          message: "user is created",
+          status: 200,
+          data: data,
+        });
+      } else {
+        res.json({
+          message: "user is not created",
+          status: 404,
+        });
+      }
     }
-  });
+  );
 };
 
 function updateUser(req, res) {
   UserModel.updateOne(
-    { name: userData.name },
-    { name: "atif" },
+    { name: body.name },
+
     (err, data) => {
       if (!err) {
+        console.log(data);
         res.json({
           message: "user is updated",
           status: 200,
@@ -41,25 +76,21 @@ function updateUser(req, res) {
 }
 
 function deleteUser(req, res) {
-  UserModel.deleteOne(
-    { _id: "" },
-
-    (err, data) => {
-      if (!err) {
-        console.log(data);
-        res.json({
-          message: "user is deleted",
-          status: 200,
-          data: data,
-        });
-      } else {
-        res.json({
-          message: "user is not deleted",
-          status: 404,
-        });
-      }
+  UserModel.deleteOne((err, data) => {
+    if (!err) {
+      console.log(data);
+      res.json({
+        message: "user is deleted",
+        status: 200,
+        data: data,
+      });
+    } else {
+      res.json({
+        message: "user is not deleted",
+        status: 404,
+      });
     }
-  );
+  });
 }
 
-module.exports = { CreateUser, updateUser, deleteUser };
+module.exports = { CreateAdmin, CreateUser, updateUser, deleteUser };
