@@ -6,6 +6,9 @@ const { json } = require("body-parser");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
+const upload = require("express-fileupload");
+const path = require("path");
+// const mv = require("mv");
 
 // const cron = require("node-cron");
 
@@ -19,7 +22,30 @@ const app = express();
 app.use(json());
 // app.use(bcrypt());
 dotenv.config();
+app.use(upload());
+
+// app.use(mv());
+
+app.get("/upload", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
+app.post("/upload", (req, res) => {
+  if (req.files) {
+    console.log(req.files);
+    const file = req.files.file;
+    const filename = file.name;
+    console.log(filename);
+
+    file.mv( filename, (err) => {
+      if (err) return console.log(err);
+      res.status(200).send("File uploaded succesfully");
+    });
+  }
+});
+
 app.use("/user", UserRouter);
+
 mongoose.connect(mongoDB, (err) => {
   if (!err) {
     console.log("connected");
