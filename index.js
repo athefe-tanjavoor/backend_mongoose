@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const mongoDB = "mongodb://localhost:27017/aatif";
 const UserRouter = require("./routes/user.routes");
+const AdminRouter = require("./routes/admin.routes");
 const { json } = require("body-parser");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -23,6 +24,7 @@ app.use(json());
 // app.use(bcrypt());
 dotenv.config();
 app.use(upload());
+app.use(express.static(path.join(__dirname, "public")));
 
 // app.use(mv());
 
@@ -37,7 +39,7 @@ app.post("/upload", (req, res) => {
     const filename = file.name;
     console.log(filename);
 
-    file.mv( filename, (err) => {
+    file.mv("./uploads/", filename, (err) => {
       if (err) return console.log(err);
       res.status(200).send("File uploaded succesfully");
     });
@@ -45,7 +47,7 @@ app.post("/upload", (req, res) => {
 });
 
 app.use("/user", UserRouter);
-
+app.use("/admin", AdminRouter);
 mongoose.connect(mongoDB, (err) => {
   if (!err) {
     console.log("connected");

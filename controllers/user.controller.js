@@ -2,30 +2,30 @@ const express = require("express");
 const UserModel = require("../model/user.model");
 // const userData = require("../db/data");
 
-const CreateAdmin = (req, res) => {
-  const body = req.body;
-  UserModel.create(
-    {
-      ...body,
-      role: "ADMIN",
-    },
-    (err, data) => {
-      console.log(data);
-      if (!err) {
-        res.json({
-          message: "user is created",
-          status: 200,
-          data: data,
-        });
-      } else {
-        res.json({
-          message: "user is not created",
-          status: 404,
-        });
-      }
-    }
-  );
-};
+// const CreateAdmin = (req, res) => {
+//   const body = req.body;
+//   UserModel.create(
+//     {
+//       ...body,
+//       role: "ADMIN",
+//     },
+//     (err, data) => {
+//       console.log(data);
+//       if (!err) {
+//         res.json({
+//           message: "user is created",
+//           status: 200,
+//           data: data,
+//         });
+//       } else {
+//         res.json({
+//           message: "user is not created",
+//           status: 404,
+//         });
+//       }
+//     }
+//   );
+// };
 
 const CreateUser = (req, res) => {
   const body = req.body;
@@ -93,4 +93,4 @@ function deleteUser(req, res) {
   });
 }
 
-module.exports = { CreateAdmin, CreateUser, updateUser, deleteUser };
+module.exports = { CreateUser, updateUser, deleteUser };
