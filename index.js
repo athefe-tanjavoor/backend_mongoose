@@ -7,8 +7,11 @@ const { json } = require("body-parser");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
-const upload = require("express-fileupload");
 const path = require("path");
+
+// const multer = require("multer");
+// const upload = require("express-fileupload");
+// const path = require("path");
 // const mv = require("mv");
 
 // const cron = require("node-cron");
@@ -22,29 +25,47 @@ const path = require("path");
 const app = express();
 app.use(json());
 // app.use(bcrypt());
-dotenv.config();
-app.use(upload());
-app.use(express.static(path.join(__dirname, "public")));
+// dotenv.config();
+// app.use(upload());
+// app.use(express.static(path.join(__dirname, "public")));
 
 // app.use(mv());
 
-app.get("/upload", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+// app.get("/upload", (req, res) => {
+//   res.sendFile(__dirname + "/index.html");
+// });
 
-app.post("/upload", (req, res) => {
-  if (req.files) {
-    console.log(req.files);
-    const file = req.files.file;
-    const filename = file.name;
-    console.log(filename);
+// app.post("/upload", (req, res) => {
+//   if (req.files) {
+//     console.log(req.files);
+//     const file = req.files.file;
+//     const filename = file.name;
+//     console.log(filename);
 
-    file.mv("./uploads/", filename, (err) => {
-      if (err) return console.log(err);
-      res.status(200).send("File uploaded succesfully");
-    });
-  }
-});
+//     file.mv("//", filename, (err) => {
+//       if (err) return console.log(err);
+//       res.status(200).send("File uploaded succesfully");
+//     });
+//   }
+// });
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "images");
+//   },
+//   filename: (req, file, cb) => {
+//     console.log(file);
+//     cb(null, Date.now() + path.extname(file.originalname));
+//   },
+// });
+// const upload = multer({ storage: storage });
+// app.set("view engine", "ejs");
+// app.get("/upload", (req, res) => {
+//   res.render("upload");
+// });
+// app.post("/upload", upload.any("image"), (req, res) => {
+//   res.send("image uploaded");
+// });
 
 app.use("/user", UserRouter);
 app.use("/admin", AdminRouter);

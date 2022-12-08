@@ -5,6 +5,7 @@ const adminSchema = new mongoose.Schema({
   age: Number,
   email: { type: String, required: true },
   password: { type: String, required: true },
+  image: { type: String, required: true },
   date: { type: Date, default: Date.now },
   // time:{type:time, default: time.now},
   hidden: { type: Boolean, default: true },

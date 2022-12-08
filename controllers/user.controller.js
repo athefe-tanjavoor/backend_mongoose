@@ -27,6 +27,35 @@ const UserModel = require("../model/user.model");
 //   );
 // };
 
+
+const getUser = (req, res) => {
+  
+  UserModel.find(
+    (err, data) => {
+      if (!err) {
+        console.log(data);
+
+        res.json({
+          message: "user is created",
+          status: 200,
+          data: data,
+        });
+      } else {
+        res.json({
+          message: "user is not created",
+          status: 404,
+        });
+      }
+    }
+  );
+};
+
+
+
+
+
+
+
 const CreateUser = (req, res) => {
   const body = req.body;
   UserModel.create(
@@ -93,4 +122,4 @@ function deleteUser(req, res) {
   });
 }
 
-module.exports = { CreateUser, updateUser, deleteUser };
+module.exports = {getUser, CreateUser, updateUser, deleteUser };
