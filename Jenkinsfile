@@ -5,8 +5,8 @@ pipeline{
         stage('Git Checkout')
         {
             steps{
-                git branch:"athefe2",url:"git branch: 'athefe2', url: 'https://github.com/athefe-tanjavoor/backend_mongoose.git'"
-            }
+                git branch: 'main', url: 'https://github.com/athefe-tanjavoor/backend_mongoose.git'
+           }
         }
     }
 
