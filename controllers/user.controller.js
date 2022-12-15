@@ -9,7 +9,7 @@ const CreateAdmin = (req, res) => {
       ...body,
       role: "ADMIN",
     },
-    (err, data) => {
+    (err, data) => {git
       console.log(data);
       if (!err) {
         res.json({
